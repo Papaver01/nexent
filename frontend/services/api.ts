@@ -72,12 +72,14 @@ export const API_ENDPOINTS = {
       `${API_BASE_URL}/image?url=${encodeURIComponent(url)}`,
   },
   model: {
-    // Official model service
-    officialModelList: `${API_BASE_URL}/me/model/list`,
-    officialModelHealthcheck: `${API_BASE_URL}/me/healthcheck`,
+    // ModelEngine health check
+    modelEngineHealthcheck: `${API_BASE_URL}/me/healthcheck`,
 
-    // Custom model service
+    // Model lists
+    officialModelList: `${API_BASE_URL}/model/list`, // ModelEngine models are also in this list
     customModelList: `${API_BASE_URL}/model/list`,
+    
+    // Custom model service
     customModelCreate: `${API_BASE_URL}/model/create`,
     customModelCreateProvider: `${API_BASE_URL}/model/provider/create`,
     customModelBatchCreate: `${API_BASE_URL}/model/provider/batch_create`,
@@ -91,7 +93,8 @@ export const API_ENDPOINTS = {
         displayName
       )}`,
     verifyModelConfig: `${API_BASE_URL}/model/temporary_healthcheck`,
-    updateSingleModel: `${API_BASE_URL}/model/update`,
+    updateSingleModel: (displayName: string) =>
+      `${API_BASE_URL}/model/update?display_name=${encodeURIComponent(displayName)}`,
     updateBatchModel: `${API_BASE_URL}/model/batch_update`,
     // LLM model list for generation
     llmModelList: `${API_BASE_URL}/model/llm_list`,
@@ -159,6 +162,29 @@ export const API_ENDPOINTS = {
         `${API_BASE_URL}/memory/delete/${memoryId}`,
       clear: `${API_BASE_URL}/memory/clear`,
     },
+  },
+  market: {
+    agents: (params?: {
+      page?: number;
+      page_size?: number;
+      category?: string;
+      tag?: string;
+      search?: string;
+    }) => {
+      const queryParams = new URLSearchParams();
+      if (params?.page) queryParams.append('page', params.page.toString());
+      if (params?.page_size) queryParams.append('page_size', params.page_size.toString());
+      if (params?.category) queryParams.append('category', params.category);
+      if (params?.tag) queryParams.append('tag', params.tag);
+      if (params?.search) queryParams.append('search', params.search);
+      
+      const queryString = queryParams.toString();
+      return `${API_BASE_URL}/market/agents${queryString ? `?${queryString}` : ''}`;
+    },
+    agentDetail: (agentId: number) => `${API_BASE_URL}/market/agents/${agentId}`,
+    categories: `${API_BASE_URL}/market/categories`,
+    tags: `${API_BASE_URL}/market/tags`,
+    mcpServers: (agentId: number) => `${API_BASE_URL}/market/agents/${agentId}/mcp_servers`,
   },
 };
 

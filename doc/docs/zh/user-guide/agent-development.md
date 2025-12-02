@@ -15,6 +15,14 @@
   <img src="./assets/agent-development/import.png" style="width: 80%; height: auto;" />
 </div>
 
+> ⚠️ **提示**：如果导入了重名的智能体，系统会弹出提示弹窗。您可以选择：
+> - **直接导入**：保留重复名称，导入后的智能体会处于不可用状态，需手动修改 Agent 名称和变量名后才能使用
+> - **重新生成并导入**：系统将调用 LLM 对 Agent 进行重命名，会消耗一定的模型 token 数，可能耗时较长
+
+<div style="display: flex; justify-content: left;">
+  <img src="./assets/agent-development/duplicated_import.png" style="width: 80%; height: auto;" />
+</div>
+
 ## 👥 配置协作智能体/工具
 
 您可以为创建的智能体配置其他协作智能体，也可以为它配置可使用的工具，以赋予智能体能力完成复杂任务。
@@ -32,7 +40,7 @@
 
 ### 🛠️ 选择 Agent 的工具
 
-智能体可以使用各种工具来完成任务，如知识库检索、收发邮件、文件管理等本地工具，也可接入第三方 MCP 工具，或自定义工具。
+智能体可以使用各种工具来完成任务，如知识库检索、文件解析、图片解析、收发邮件、文件管理等本地工具，也可接入第三方 MCP 工具，或自定义工具。
 
 1. 在"选择 Agent 的工具"页签右侧，点击"刷新工具"来刷新可用工具列表
 2. 选择想要添加工具所在的分组
@@ -45,6 +53,11 @@
   <img src="./assets/agent-development/set-tool.png" style="width: 50%; height: auto;" />
 </div>
 
+> 💡 **小贴士**：
+> 1. 请选择 `knowledge_base_search` 工具，启用知识库的检索功能。
+> 2. 请选择 `analyze_text_file` 工具，启用文档类、文本类文件的解析功能。
+> 3. 请选择 `analyze_image` 工具，启用图片类文件的解析功能。
+> 
 > 📚 想了解系统已经内置的所有本地工具能力？请参阅 [本地工具概览](./local-tools/index.md)。
 
 ### 🔌 添加 MCP 工具
